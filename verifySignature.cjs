@@ -1,12 +1,8 @@
 let elliptic = require("elliptic");
 let ec = new elliptic.ec("secp256k1");
+const { y_sum_s } = require("./const.cjs");
 
-const y_sum = [
-  2, 105, 56, 31, 30, 34, 155, 165, 65, 238, 163, 12, 224, 138, 193, 138, 163,
-  33, 108, 184, 199, 29, 146, 179, 134, 203, 218, 180, 48, 140, 69, 88, 38,
-];
-
-const compressed = Buffer.from(y_sum).toString("hex");
+const compressed = Buffer.from(y_sum_s).toString("hex");
 const pubKey = Buffer.from(compressed, "hex");
 const pk = ec.keyFromPublic(pubKey);
 
@@ -30,10 +26,10 @@ const sigRaw = {
 };
 const sig = {
   r: Buffer.from(sigRaw.r.scalar).toString("hex"),
-  s: Buffer.from(sigRaw.s.scalar).toString("hex")
+  s: Buffer.from(sigRaw.s.scalar).toString("hex"),
 };
 
 const msg = "hello";
-const msgHex = Buffer.from(msg).toString('hex');
+const msgHex = Buffer.from(msg).toString("hex");
 const result = pk.verify(Buffer.from(msgHex, "hex"), sig);
 console.log(result);

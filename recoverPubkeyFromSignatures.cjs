@@ -1,5 +1,6 @@
 let elliptic = require("elliptic");
 let ec = new elliptic.ec("secp256k1");
+const { y_sum_s } = require("./const.cjs");
 let BN = require("bn.js");
 
 // hello
@@ -27,9 +28,9 @@ const sig = {
 };
 
 const msg = "hello";
-const msgHex = Buffer.from(msg).toString('hex');
+const msgHex = Buffer.from(msg).toString("hex");
 const recoveredPubKey = ec.recoverPubKey(
-  Buffer.from(msgHex, 'hex'),
+  Buffer.from(msgHex, "hex"),
   sig,
   sigRaw.recid
 );
@@ -39,7 +40,7 @@ console.log(
   recoveredPubKey.encode("hex")
 );
 
-console.log(ec.keyFromPublic(recoveredPubKey).getPublic(true, 'hex'));
+console.log(ec.keyFromPublic(recoveredPubKey).getPublic(true, "hex"));
 
 // hello2
 const sigRaw2 = {
@@ -62,7 +63,7 @@ const sigRaw2 = {
 };
 
 const msg2 = "hello1";
-const msg2Hex = Buffer.from(msg2).toString('hex');
+const msg2Hex = Buffer.from(msg2).toString("hex");
 
 const sig2 = {
   r: new BN(Buffer.from(sigRaw2.r.scalar).toString("hex"), 16),
@@ -70,7 +71,7 @@ const sig2 = {
 };
 
 const recoveredPubKey2 = ec.recoverPubKey(
-  Buffer.from(msg2Hex, 'hex'),
+  Buffer.from(msg2Hex, "hex"),
   sig2,
   sigRaw2.recid,
   "hex"
@@ -81,11 +82,6 @@ console.log(
   recoveredPubKey2.encode("hex")
 );
 
-console.log(ec.keyFromPublic(recoveredPubKey2).getPublic(true, 'hex'));
+console.log(ec.keyFromPublic(recoveredPubKey2).getPublic(true, "hex"));
 
-const y_sum = [
-  2, 105, 56, 31, 30, 34, 155, 165, 65, 238, 163, 12, 224, 138, 193, 138, 163,
-  33, 108, 184, 199, 29, 146, 179, 134, 203, 218, 180, 48, 140, 69, 88, 38,
-];
-
-console.log(Buffer.from(y_sum).toString('hex'));
+console.log(Buffer.from(y_sum_s).toString("hex"));
