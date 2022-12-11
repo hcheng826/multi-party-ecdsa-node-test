@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "elliptic": "^6.5.4",
+    "ethers": "^5.7.2",
     "keccak256": "^1.0.6"
   }
 }
